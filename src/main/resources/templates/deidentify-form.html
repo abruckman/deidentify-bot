@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>De-identify CSV</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f7f7fa; margin: 0; padding: 0; }
+        .container { max-width: 500px; margin: 40px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 32px; }
+        h1 { text-align: center; color: #2c3e50; }
+        form { display: flex; flex-direction: column; gap: 16px; }
+        input[type="file"] { padding: 8px; }
+        button { background: #4f8cff; color: #fff; border: none; border-radius: 4px; padding: 12px; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
+        button:hover { background: #357ae8; }
+        .message { margin-top: 16px; color: #c0392b; text-align: center; }
+        .spinner { display: none; margin: 24px auto 0 auto; border: 6px solid #f3f3f3; border-top: 6px solid #4f8cff; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+    <script>
+        function showSpinner() {
+            document.getElementById('spinner').style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <h1>De-identify CSV File</h1>
+    <form method="post" enctype="multipart/form-data" action="/deidentify" onsubmit="showSpinner()">
+        <input type="file" name="file" accept=".csv" required />
+        <button type="submit">Generate Script</button>
+    </form>
+    <div id="spinner" class="spinner"></div>
+    <div th:if="${message}" class="message">
+        <p th:text="${message}"></p>
+    </div>
+</div>
+</body>
+</html>
